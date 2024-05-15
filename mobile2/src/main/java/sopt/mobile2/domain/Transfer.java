@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Transfer extends BaseTime{
+public class Transfer{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,6 @@ public class Transfer extends BaseTime{
 
     //거래액
     private int transferAmount;
+
+    private int month;
 }

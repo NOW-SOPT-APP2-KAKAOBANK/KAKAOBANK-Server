@@ -14,8 +14,13 @@ public class PaymentService {
     private final TransferRepository transferRepository;
 
     public PaymentResponse getMonthPayment(Long accountId, int month){
-        List<Transfer> transfers = transferRepository.findByMyAccountIdAndMonth(accountId, month);
-        int totalPayment = transfers.stream().mapToInt(Transfer::getTransferAmount).sum();
-        return new PaymentResponse(month, totalPayment);
+        List<Transfer> transfersForElse = transferRepository.findByMyAccountIdAndMonth(accountId, month);
+        List<Transfer> transfersForMe = transferRepository.findByReceiveAccountIdAndMonth(accountId, month);
+
+        int totalPaymentForElse = transfersForElse.stream().mapToInt(Transfer::getTransferAmount).sum();
+        int totalPaymentForMe = transfersForMe.stream().mapToInt(Transfer::getTransferAmount).sum();
+
+        int total = totalPaymentForMe-totalPaymentForElse;
+        return new PaymentResponse(month, total);
     }
 }

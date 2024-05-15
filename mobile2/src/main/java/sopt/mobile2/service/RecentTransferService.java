@@ -24,7 +24,6 @@ public class RecentTransferService {
     public List<RecentTransferResponse> recentTransferList(Long accountId) {
         List<Transfer> transfers = transferRepository.findByMyAccountId(accountId);
 
-        // LinkedHashMap을 사용하여 중복된 수신 계좌를 최신 정보로 업데이트하고 유지합니다.
         Map<Long, RecentTransferResponse> uniqueTransfers = transfers.stream()
                 .collect(Collectors.toMap(
                         transfer -> transfer.getReceiveAccount().getId(),

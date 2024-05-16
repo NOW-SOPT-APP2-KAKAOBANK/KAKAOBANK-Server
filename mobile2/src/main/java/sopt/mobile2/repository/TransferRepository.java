@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TransferRepository extends JpaRepository<Transfer, Long> {
     List<Transfer> findByMyAccountIdAndMonth(Long accountId, int month);
+    List<Transfer> findByReceiveAccountIdAndMonth(Long accountId, int month);
     List<Transfer> findByMyAccountId(Long accountId);
 }

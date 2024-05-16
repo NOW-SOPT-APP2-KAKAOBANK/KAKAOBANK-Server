@@ -28,7 +28,7 @@ public class MonthlyTransferService {
                                 parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), -transfer.getTransferAmount(),transfer.getMyAccountBalance()));
                     } else if (transfer.getReceiveAccount().getId().equals(requestDto.accountId())){
                         result.add(new MonthlyTransferResponseDto(transfer.getMyAccount().getAccountName(),
-                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), transfer.getTransferAmount(),transfer.getMyAccountBalance()));
+                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), transfer.getTransferAmount(),transfer.getReceiveAccountBalance()));
                     }
                 }
         );

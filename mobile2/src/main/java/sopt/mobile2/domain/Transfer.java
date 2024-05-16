@@ -2,6 +2,9 @@ package sopt.mobile2.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,4 +26,7 @@ public class Transfer{
     private int transferAmount;
 
     private int month;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

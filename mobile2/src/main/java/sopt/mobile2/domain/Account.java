@@ -1,10 +1,12 @@
 package sopt.mobile2.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
+@Data
+@NoArgsConstructor
 public class Account {
 
     @Id

@@ -21,6 +21,10 @@ repositories {
 	mavenCentral()
 }
 
+compileJava {
+	options.compilerArgs << '-parameters'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -33,4 +37,12 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+dependencies {
+	// Other dependencies
+	testImplementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-core:5.7.0'
+	testImplementation 'org.mockito:mockito-junit-jupiter:5.7.0'
 }

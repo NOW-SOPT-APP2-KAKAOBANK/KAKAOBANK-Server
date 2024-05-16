@@ -2,10 +2,7 @@ package sopt.mobile2.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sopt.mobile2.dto.RecentTransferResponse;
 import sopt.mobile2.service.RecentTransferService;
 import java.util.List;
@@ -21,6 +18,20 @@ public class RecentTransferController {
     public ResponseEntity<List<RecentTransferResponse>> getRecentTransfersByAccount(@PathVariable(name="accountId") Long accountId) {
         List<RecentTransferResponse> response = recentTransferService.recentTransferList(accountId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{myAccountId}/bookmark/{markedAccountId}")
+    public ResponseEntity<Void> addBookMark(@PathVariable(name = "myAccountId") Long myAccountId,
+                                            @PathVariable(name = "markedAccountId") Long markedAccountId) {
+        recentTransferService.addBookMark(myAccountId, markedAccountId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{myAccountId}/bookmark/{markedAccountId}")
+    public ResponseEntity<Void> removeBookMark(@PathVariable(name = "myAccountId") Long myAccountId,
+                                               @PathVariable(name = "markedAccountId") Long markedAccountId) {
+        recentTransferService.removeBookMark(myAccountId, markedAccountId);
+        return ResponseEntity.ok().build();
     }
 }
 

@@ -2,10 +2,13 @@ package sopt.mobile2.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sopt.mobile2.domain.Account;
+import sopt.mobile2.domain.BookMark;
 import sopt.mobile2.domain.Transfer;
 import sopt.mobile2.dto.RecentTransferResponse;
-import sopt.mobile2.repository.BookmarkRepository;
+import sopt.mobile2.repository.AccountRepository;
+import sopt.mobile2.repository.BookMarkRepository;
 import sopt.mobile2.repository.TransferRepository;
 
 import java.util.Comparator;
@@ -19,7 +22,8 @@ import java.util.Map;
 public class RecentTransferService {
 
     private final TransferRepository transferRepository;
-    private final BookmarkRepository bookmarkRepository;
+    private final BookMarkRepository bookmarkRepository;
+    private final AccountRepository accountRepository;
 
     public List<RecentTransferResponse> recentTransferList(Long accountId) {
         List<Transfer> transfers = transferRepository.findByMyAccountId(accountId);
@@ -44,5 +48,27 @@ public class RecentTransferService {
 
     private boolean isFavorite(Account account){
         return bookmarkRepository.existsByMarkedAccountId(account.getId());
+    }
+
+    @Transactional
+    public void addBookMark(Long myAccountId, Long markedAccountId) {
+        Account myAccount = accountRepository.findById(myAccountId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid myAccount ID"));
+        Account markedAccount = accountRepository.findById(markedAccountId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid markedAccount ID"));
+
+        BookMark bookMark = BookMark.builder()
+                .myAccount(myAccount)
+                .markedAccount(markedAccount)
+                .build();
+
+        bookmarkRepository.save(bookMark);
+    }
+
+    @Transactional
+    public void removeBookMark(Long myAccountId, Long markedAccountId) {
+        BookMark bookMark = bookmarkRepository.findByMyAccountIdAndMarkedAccountId(myAccountId, markedAccountId)
+                .orElseThrow(() -> new IllegalArgumentException("Bookmark not found"));
+        bookmarkRepository.delete(bookMark);
     }
 }

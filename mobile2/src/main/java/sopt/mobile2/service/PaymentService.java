@@ -28,7 +28,12 @@ public class PaymentService {
 
         int total = totalPaymentForMe-totalPaymentForElse;
         List<MonthlyTransferResponseDto> transferByMonth = getTransferByMonth(accountId, month);
-        return PaymentResponseDto.of(total, transferByMonth);
+
+        boolean isTotalOverZero = false;
+        if(total >= 0) {
+            isTotalOverZero = true;
+        }
+        return PaymentResponseDto.of(total, isTotalOverZero, transferByMonth);
     }
 
     public List<MonthlyTransferResponseDto> getTransferByMonth(Long accountId, int month) {

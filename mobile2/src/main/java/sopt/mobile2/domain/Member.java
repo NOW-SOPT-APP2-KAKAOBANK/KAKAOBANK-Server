@@ -15,7 +15,4 @@ public class Member {
     private Long id;
 
     private String name;
-
-    @OneToMany
-    private List<Account> accountList = new ArrayList<>();
 }

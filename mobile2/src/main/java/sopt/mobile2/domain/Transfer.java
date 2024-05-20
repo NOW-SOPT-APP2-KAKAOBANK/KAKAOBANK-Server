@@ -35,6 +35,10 @@ public class Transfer{
 
     private int month;
 
+    private boolean isWithdraw;
+
+    private String hashTag;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

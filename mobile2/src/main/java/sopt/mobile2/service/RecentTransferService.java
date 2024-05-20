@@ -35,14 +35,19 @@ public class RecentTransferService {
                                 transfer.getReceiveAccount().getAccountName(),
                                 transfer.getReceiveAccount().getAccountNumber(),
                                 isFavorite(transfer.getReceiveAccount()),
-                                transfer.getCreatedAt()),
+                                transfer.getCreatedAt(),
+                                transfer.getReceiveAccount().getBankName(),  // 추가된 부분
+                                transfer.getReceiveAccount().getImgUrl(),
+                                transfer.getReceiveAccount().getId()// 추가된 부분
+                        ),
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
 
+
         return uniqueTransfers.values().stream()
                 .sorted(Comparator.comparing(RecentTransferResponse::isAccountLike).reversed()
-                        .thenComparing(RecentTransferResponse::getCreatedAt, Comparator.nullsLast(Comparator.reverseOrder())))
+                        .thenComparing(RecentTransferResponse::createdAt, Comparator.nullsLast(Comparator.reverseOrder())))
                 .collect(Collectors.toList());
     }
 

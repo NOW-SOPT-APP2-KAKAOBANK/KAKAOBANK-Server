@@ -21,4 +21,8 @@ public class Account {
     private int balance;
 
     private int accountNumber;
+
+    private String imgUrl;
+
+    private String bankName;
 }

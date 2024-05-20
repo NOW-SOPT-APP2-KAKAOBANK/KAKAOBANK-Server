@@ -23,12 +23,14 @@ public class MonthlyTransferService {
 
         findTransfer.forEach(
                 transfer -> {
+                    //출금
                     if(transfer.getMyAccount().getId().equals(requestDto.accountId())) {
                         result.add(new MonthlyTransferResponseDto(transfer.getReceiveAccount().getAccountName(),
-                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), -transfer.getTransferAmount(),transfer.getMyAccountBalance()));
+                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), -transfer.getTransferAmount(),transfer.getMyAccountBalance(), true, transfer.getHashTag()));
+                        //입금
                     } else if (transfer.getReceiveAccount().getId().equals(requestDto.accountId())){
                         result.add(new MonthlyTransferResponseDto(transfer.getMyAccount().getAccountName(),
-                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), transfer.getTransferAmount(),transfer.getReceiveAccountBalance()));
+                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), transfer.getTransferAmount(),transfer.getReceiveAccountBalance(), false, transfer.getHashTag()));
                     }
                 }
         );

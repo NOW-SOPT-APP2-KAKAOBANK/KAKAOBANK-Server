@@ -1,4 +1,4 @@
 package sopt.mobile2.dto;
 
-public record MonthlyTransferRequestDto(Long accountId) {
+public record MonthlyTransferRequestDto(Long accountId, int month) {
 }

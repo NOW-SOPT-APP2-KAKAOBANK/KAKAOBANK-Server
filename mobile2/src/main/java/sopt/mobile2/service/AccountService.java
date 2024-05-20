@@ -3,6 +3,7 @@ package sopt.mobile2.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sopt.mobile2.domain.Account;
+import sopt.mobile2.dto.AccountInfoResponseDto;
 import sopt.mobile2.dto.AccountResponseDto;
 import sopt.mobile2.repository.AccountRepository;
 
@@ -21,4 +22,11 @@ public class AccountService {
                 account -> AccountResponseDto.of(account)
         ).collect(Collectors.toList());
     }
+
+    public AccountInfoResponseDto getMyAccountInfo(Long accountId){
+        Account myAccount = accountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid myAccount ID"));
+        return AccountInfoResponseDto.of(myAccount);
+    }
+
 }

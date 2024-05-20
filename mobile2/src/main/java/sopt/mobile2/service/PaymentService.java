@@ -21,6 +21,7 @@ public class PaymentService {
         int totalPaymentForMe = transfersForMe.stream().mapToInt(Transfer::getTransferAmount).sum();
 
         int total = totalPaymentForMe-totalPaymentForElse;
+
         return new PaymentResponse(month, total);
     }
 }

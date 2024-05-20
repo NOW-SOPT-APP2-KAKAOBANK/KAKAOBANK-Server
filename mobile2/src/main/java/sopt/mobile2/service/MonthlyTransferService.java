@@ -20,18 +20,17 @@ public class MonthlyTransferService {
         List<MonthlyTransferResponseDto> result = new ArrayList<>();
         List<Transfer> findTransfer = transferRepository.findByMyAccountIdOrReceiveAccountIdAndMonthOrderByCreatedAtDesc(
                 requestDto.accountId(), requestDto.accountId(), month);
-        for (Transfer transfer : findTransfer) {
-            System.out.println(transfer.getMonth());
-        }
 
         findTransfer.forEach(
                 transfer -> {
+                    //출금
                     if(transfer.getMyAccount().getId().equals(requestDto.accountId())) {
                         result.add(new MonthlyTransferResponseDto(transfer.getReceiveAccount().getAccountName(),
-                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), -transfer.getTransferAmount(),transfer.getMyAccountBalance(), month));
+                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), -transfer.getTransferAmount(),transfer.getMyAccountBalance(), true, transfer.getHashTag()));
+                        //입금
                     } else if (transfer.getReceiveAccount().getId().equals(requestDto.accountId())){
                         result.add(new MonthlyTransferResponseDto(transfer.getMyAccount().getAccountName(),
-                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), transfer.getTransferAmount(),transfer.getReceiveAccountBalance(), month));
+                                parseLocalDateTimeToMonthAndDate(transfer.getCreatedAt()), transfer.getTransferAmount(),transfer.getReceiveAccountBalance(), false, transfer.getHashTag()));
                     }
                 }
         );

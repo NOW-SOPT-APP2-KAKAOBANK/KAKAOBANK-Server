@@ -57,17 +57,19 @@ public class RecentTransferService {
 
     @Transactional
     public void addBookMark(Long myAccountId, Long markedAccountId) {
-        Account myAccount = accountRepository.findById(myAccountId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid myAccount ID"));
-        Account markedAccount = accountRepository.findById(markedAccountId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid markedAccount ID"));
 
-        BookMark bookMark = BookMark.builder()
-                .myAccount(myAccount)
-                .markedAccount(markedAccount)
-                .build();
+        if(!bookmarkRepository.existsByMyAccountIdAndMarkedAccountId(myAccountId, markedAccountId)) {
+            Account myAccount = accountRepository.findById(myAccountId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid myAccount ID"));
+            Account markedAccount = accountRepository.findById(markedAccountId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid markedAccount ID"));
 
-        bookmarkRepository.save(bookMark);
+            BookMark bookMark = BookMark.builder()
+                    .myAccount(myAccount)
+                    .markedAccount(markedAccount)
+                    .build();
+            bookmarkRepository.save(bookMark);
+        }
     }
 
     @Transactional

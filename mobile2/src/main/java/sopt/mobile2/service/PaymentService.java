@@ -23,10 +23,10 @@ public class PaymentService {
         List<Transfer> transfersForElse = transferRepository.findByMyAccountIdAndMonth(accountId, month);
         List<Transfer> transfersForMe = transferRepository.findByReceiveAccountIdAndMonth(accountId, month);
 
-        int totalPaymentForElse = transfersForElse.stream().mapToInt(Transfer::getTransferAmount).sum();
-        int totalPaymentForMe = transfersForMe.stream().mapToInt(Transfer::getTransferAmount).sum();
+        long totalPaymentForElse = transfersForElse.stream().mapToLong(Transfer::getTransferAmount).sum();
+        long totalPaymentForMe = transfersForMe.stream().mapToLong(Transfer::getTransferAmount).sum();
 
-        int total = totalPaymentForMe-totalPaymentForElse;
+        long total = totalPaymentForMe-totalPaymentForElse;
         List<MonthlyTransferResponseDto> transferByMonth = getTransferByMonth(accountId, month);
 
         boolean isTotalOverZero = false;

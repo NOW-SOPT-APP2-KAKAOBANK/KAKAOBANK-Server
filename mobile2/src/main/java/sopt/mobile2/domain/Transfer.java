@@ -25,13 +25,13 @@ public class Transfer{
     private Account receiveAccount;
 
     //거래액
-    private int transferAmount;
+    private long transferAmount;
 
     //거래 후 송금 계좌의 남은 잔액
-    private int myAccountBalance;
+    private long myAccountBalance;
 
     //거래 후 송금 받은 계좌의 남은 잔액
-    private int receiveAccountBalance;
+    private long receiveAccountBalance;
 
     private int month;
 

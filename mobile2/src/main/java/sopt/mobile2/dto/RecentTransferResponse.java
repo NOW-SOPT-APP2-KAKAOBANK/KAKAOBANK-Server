@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public record RecentTransferResponse(
         String accountName,
-        int accountNumber,
+        long accountNumber,
         boolean isAccountLike,
         LocalDateTime createdAt,
         String bankName,

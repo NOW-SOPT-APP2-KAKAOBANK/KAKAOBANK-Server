@@ -18,9 +18,9 @@ public class Account {
 
     private String accountName;
 
-    private int balance;
+    private long balance;
 
-    private int accountNumber;
+    private long accountNumber;
 
     private String imgUrl;
 

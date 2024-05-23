@@ -63,7 +63,9 @@ public class PaymentService {
             month = "0" + month;
         }
         String day = Integer.toString(localDateTime.getDayOfMonth());
-
+        if(day.length() == 1) {
+            day = "0" + day;
+        }
         return month + "." + day;
     }
 }
